@@ -11,7 +11,32 @@ pipeline {
     stage('Performance Check') {
       steps {
 
+checkout scm
 
+    recordDynatraceSession(
+      envId: 'Dynatrace Tenant',
+        testCase: 'loadtest',
+        tagMatchRules: [
+        [
+        meTypes: [
+                [meType: 'SERVICE']
+                      
+        ],
+        tags: [
+                [context: 'CONTEXTLESS', key: 'app', value: "${env.APP_NAME}"],
+                        [context: 'CONTEXTLESS', key: 'environment', value: 'dev']
+                              
+        ]
+            
+        ]
+          
+        ]
+        
+            ) 
+    {
+        // trigger JMeter test
+        
+    }  
 
       }
     }
